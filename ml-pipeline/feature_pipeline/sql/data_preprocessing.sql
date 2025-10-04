@@ -1,4 +1,4 @@
-create or replace table `tactile-471816.data_analyst_test_local.data_preprocessing` as
+create or replace table `lily.test.data_preprocessing` as
 
   -- User installs CTE
 WITH user_installs AS (
@@ -8,7 +8,7 @@ WITH user_installs AS (
       is_age_30,
       is_android,
       is_female
-    FROM `tactile-471816.data_analyst_test_local.users_view`
+    FROM `lily.test.users_view`
     WHERE install_date IS NOT NULL
   ),
 
@@ -17,7 +17,7 @@ WITH user_installs AS (
     SELECT
       r.user_id,
       MIN(DATE_DIFF(DATE(r.date), ui.install_date, DAY)) as first_purchase_day
-    FROM `tactile-471816.data_analyst_test_local.revenue_view` r
+    FROM `lily.test.revenue_view` r
     JOIN user_installs ui ON r.user_id = ui.user_id
     WHERE DATE(r.date) >= ui.install_date
       AND DATE_DIFF(DATE(r.date), ui.install_date, DAY) <= 20
@@ -63,7 +63,7 @@ WITH user_installs AS (
       END as is_return_next_day
 
     FROM user_installs ui
-    LEFT JOIN `tactile-471816.data_analyst_test_local.activity_view` a
+    LEFT JOIN `lily.test.activity_view` a
       ON ui.user_id = a.user_id
       AND DATE_DIFF(a.date, ui.install_date, DAY) BETWEEN 0 AND 19
     GROUP BY ui.user_id, ui.install_date  -- Changed from a.user_id
@@ -89,7 +89,7 @@ WITH user_installs AS (
       SUM(CASE WHEN DATE_DIFF(DATE(r.date), ui.install_date, DAY) BETWEEN 0 AND 19 THEN r.transaction_value ELSE 0 END) as revenue_day1_20
 
     FROM user_installs ui
-    LEFT JOIN `tactile-471816.data_analyst_test_local.revenue_view` r
+    LEFT JOIN `lily.test.revenue_view` r
       ON ui.user_id = r.user_id
       AND DATE_DIFF(DATE(r.date), ui.install_date, DAY) BETWEEN 0 AND 19
       AND r.transaction_value IS NOT NULL

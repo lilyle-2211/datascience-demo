@@ -1,11 +1,11 @@
-create or replace table `tactile-471816.data_analyst_test_local.train_test_split` as
+create or replace table `lily.test.train_test_split` as
 WITH stratified AS (
   SELECT
     *,
     CASE WHEN revenue_day1_20 > 0 THEN 'positive' ELSE 'zero' END AS target_group,
     FARM_FINGERPRINT(CAST(user_id AS STRING)) AS hash_val
   FROM
-    `tactile-471816.data_analyst_test_local.data_preprocessing`
+    `lily.test.data_preprocessing`
 ),
 split AS (
   SELECT
