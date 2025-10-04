@@ -1,0 +1,42 @@
+[project]
+name = "datascience-demo"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "apache-airflow[gcp]>=3.1.0",
+    "db-dtypes>=1.4.3",
+    "fastapi>=0.117.1",
+    "google>=3.0.0",
+    "google-cloud-bigquery>=3.38.0",
+    "lightgbm>=4.6.0",
+    "matplotlib>=3.10.6",
+    "mlflow>=3.4.0",
+    "numpy>=2.3.3",
+    "optuna>=4.5.0",
+    "pandas>=2.3.2",
+    "plotly>=6.3.0",
+    "pydantic>=2.11.9",
+    "pyspark>=4.0.1",
+    "pytest>=8.4.2",
+    "pytest-html>=4.1.1",
+    "scikit-learn>=1.7.2",
+    "scipy>=1.16.2",
+    "seaborn>=0.13.2",
+    "statsmodels>=0.14.5",
+    "streamlit>=1.49.1",
+    "uvicorn>=0.37.0",
+    "xgboost>=3.0.5",
+]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q --strict-markers"
+testpaths = [
+    "tests",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "spark: marks tests as requiring Spark",
+]
