@@ -31,11 +31,7 @@
 | **BIC Score** | 5298.29 | Lower = better, penalizes complexity more |
 | **Log Likelihood** | -2631.88 | Higher = better model fit |
 
-**How to Interpret:**
-- **2 clusters detected**: Data has bimodal distribution
-- **Equal weights (0.5/0.5)**: Clusters are similar in size
-- **Different means**: Clear separation between groups
-- **Use for**: Customer segmentation, quality control, market analysis
+
 
 ### Poisson Distribution Results
 
@@ -66,21 +62,3 @@
 - **λ = 4.2**: Expect ~4 events per time period
 - **Good fit**: Random, independent events
 - **Applications**: Defect counting, customer arrivals, system failurests
-
-### For Gaussian Mixture Models
-- **Data Type**: Continuous numerical data (float/int)
-- **Format**: 2D numpy array with shape `(n_samples, 1)`
-- **Examples**:
-  - Sales amounts: `[25.50, 87.20, 45.30, ...]`
-  - Response times: `[0.2, 1.5, 0.8, ...]`
-  - Test scores: `[85, 92, 78, ...]`
-- **Conversion**: `data.reshape(-1, 1)` if you have 1D array
-
-### For Poisson Distribution
-- **Data Type**: Non-negative integers (count data)
-- **Format**: 1D numpy array
-- **Examples**:
-  - Defects per batch: `[2, 0, 3, 1, 4, ...]`
-  - Customer arrivals: `[8, 12, 6, 15, ...]`
-  - Website visits: `[450, 523, 389, ...]`
-- **Range**: Values should be ≥ 0 and integers
