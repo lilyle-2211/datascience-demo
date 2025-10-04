@@ -1,16 +1,9 @@
-# Parametric Distribution Models
+# <span style="color: #2E86AB">Parametric Distribution Models</span>
 
-This module demonstrates parametric modeling techniques using Gaussian Mixture Models (GMM) and Poisson distributions with functional programming approach.
+This module demonstrates parametric modeling techniques using Gaussian Mixture Models (GMM) and Poisson distributions.
 
-## Example Results
 
-### Gaussian Mixture Model
-![GMM Example](gmm_example.png)
-
-### Poisson Distribution
-![Poisson Example](poisson_example.png)
-
-## Data Requirements
+## <span style="color: #2E86AB">Data Requirements</span>
 
 ### For Gaussian Mixture Models
 - **Data Type**: Continuous numerical data (float/int)
@@ -30,7 +23,16 @@ This module demonstrates parametric modeling techniques using Gaussian Mixture M
   - Website visits: `[450, 523, 389, ...]`
 - **Range**: Values should be ≥ 0 and integers
 
-## Expected Outputs & Interpretation
+
+## <span style="color: #2E86AB">Example Results</span>
+
+### Gaussian Mixture Model
+![GMM Example](gmm_example.png)
+
+### Poisson Distribution
+![Poisson Example](poisson_example.png)
+
+## <span style="color: #2E86AB">Expected Outputs & Interpretation</span>
 
 ### Gaussian Mixture Model Results
 
@@ -75,7 +77,7 @@ This module demonstrates parametric modeling techniques using Gaussian Mixture M
 - **Good fit**: Random, independent events
 - **Applications**: Defect counting, customer arrivals, system failures
 
-## Quick Start
+## <span style="color: #2E86AB">Quick Start</span>
 
 To generate the example plots shown above:
 
@@ -83,17 +85,9 @@ To generate the example plots shown above:
 # Run the demonstration script
 python parametrics_model.py
 
-# Or use individual functions
-from parametrics_model import analyze_gaussian_mixture, analyze_poisson_data
-from data_generators import generate_gaussian_mixture_data, generate_poisson_data
-
 # Generate and analyze GMM data
-gmm_data = generate_gaussian_mixture_data(n_samples=1000)
 gmm_results = analyze_gaussian_mixture(gmm_data, n_components=2)
 
 # Generate and analyze Poisson data
-poisson_data = generate_poisson_data(lam=4.2, size=1000)
 poisson_results = analyze_poisson_data(poisson_data)
 ```
-
-The plots will be automatically saved as `gmm_example.png` and `poisson_example.png` when running the main script.
