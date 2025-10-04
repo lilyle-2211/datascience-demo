@@ -1,9 +1,9 @@
-# <span style="color: #2E86AB">Parametric Distribution Models</span>
+# Parametric Distribution Models
 
 This module demonstrates parametric modeling techniques using Gaussian Mixture Models (GMM) and Poisson distributions.
 
 
-## <span style="color: #2E86AB">Data Requirements</span>
+## Data Requirements
 
 ### For Gaussian Mixture Models
 - **Data Type**: Continuous numerical data (float/int)
@@ -24,7 +24,7 @@ This module demonstrates parametric modeling techniques using Gaussian Mixture M
 - **Range**: Values should be ≥ 0 and integers
 
 
-## <span style="color: #2E86AB">Example Results</span>
+## Example Results
 
 ### Gaussian Mixture Model
 ![GMM Example](gmm_example.png)
@@ -32,7 +32,7 @@ This module demonstrates parametric modeling techniques using Gaussian Mixture M
 ### Poisson Distribution
 ![Poisson Example](poisson_example.png)
 
-## <span style="color: #2E86AB">Expected Outputs & Interpretation</span>
+## Expected Outputs & Interpretation
 
 ### Gaussian Mixture Model Results
 
@@ -77,7 +77,7 @@ This module demonstrates parametric modeling techniques using Gaussian Mixture M
 - **Good fit**: Random, independent events
 - **Applications**: Defect counting, customer arrivals, system failures
 
-## <span style="color: #2E86AB">Quick Start</span>
+## Quick Start
 
 To generate the example plots shown above:
 
