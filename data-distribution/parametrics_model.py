@@ -1,14 +1,8 @@
 """
-Parametric Distribution Models - Functional Approach
-===================================================
-
 This module demonstrates parametric modeling techniques using:
 1. Gaussian Mixture Models (GMM) from sklearn
 2. Poisson Distribution from scipy.stats
 
-All functions are standalone without classes for simplicity.
-
-Author: Data Science Demo
 """
 
 import matplotlib
