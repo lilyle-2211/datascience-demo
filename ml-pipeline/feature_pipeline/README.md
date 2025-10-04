@@ -1,45 +1,154 @@
-Overview
-========
+# ML Feature Pipeline with Airflow Astronomer
 
-Welcome to Astronomer! This project was generated after you ran 'astro dev init' using the Astronomer CLI. This readme describes the contents of the project, as well as how to run Apache Airflow on your local machine.
+## Overview
 
-Project Contents
-================
+This project uses **Apache Airflow with Astronomer** to create a robust data aggregation and feature engineering pipeline for machine learning use cases. The pipeline transforms raw data into meaningful features that can be consumed by ML models.
 
-Your Astro project contains the following files and folders:
+## Purpose
 
-- dags: This folder contains the Python files for your Airflow DAGs. By default, this directory includes one example DAG:
-    - `example_astronauts`: This DAG shows a simple ETL pipeline example that queries the list of astronauts currently in space from the Open Notify API and prints a statement for each astronaut. The DAG uses the TaskFlow API to define tasks in Python, and dynamic task mapping to dynamically print a statement for each astronaut. For more on how this DAG works, see our [Getting started tutorial](https://www.astronomer.io/docs/learn/get-started-with-airflow).
-- Dockerfile: This file contains a versioned Astro Runtime Docker image that provides a differentiated Airflow experience. If you want to execute other commands or overrides at runtime, specify them here.
-- include: This folder contains any additional files that you want to include as part of your project. It is empty by default.
-- packages.txt: Install OS-level packages needed for your project by adding them to this file. It is empty by default.
-- requirements.txt: Install Python packages needed for your project by adding them to this file. It is empty by default.
-- plugins: Add custom or community plugins for your project to this file. It is empty by default.
-- airflow_settings.yaml: Use this local-only file to specify Airflow Connections, Variables, and Pools instead of entering them in the Airflow UI as you develop DAGs in this project.
+- **Data Aggregation**: Collect and combine data from multiple sources
+- **Feature Engineering**: Transform raw data into meaningful features for ML models
+- **Data Quality**: Ensure data consistency and quality for downstream ML processes
+- **Automation**: Scheduled and orchestrated data processing workflows
 
-Deploy Your Project Locally
-===========================
+## Pipeline Components
 
-Start Airflow on your local machine by running 'astro dev start'.
+### Data Processing Steps
 
-This command will spin up five Docker containers on your machine, each for a different Airflow component:
+1. **Data Preprocessing** (`data_preprocessing.sql`)
+   - Clean and standardize raw data
+   - Handle missing values and outliers
+   - Create base feature transformations
 
-- Postgres: Airflow's Metadata Database
-- Scheduler: The Airflow component responsible for monitoring and triggering tasks
-- DAG Processor: The Airflow component responsible for parsing DAGs
-- API Server: The Airflow component responsible for serving the Airflow UI and API
-- Triggerer: The Airflow component responsible for triggering deferred tasks
+2. **Train/Test Split** (`train_test_split.sql`)
+   - Split processed data into training and testing sets
+   - Maintain data integrity across splits
+   - Prepare data for ML model training
 
-When all five containers are ready the command will open the browser to the Airflow UI at http://localhost:8080/. You should also be able to access your Postgres Database at 'localhost:5432/postgres' with username 'postgres' and password 'postgres'.
+## Project Structure
 
-Note: If you already have either of the above ports allocated, you can either [stop your existing Docker containers or change the port](https://www.astronomer.io/docs/astro/cli/troubleshoot-locally#ports-are-not-available-for-my-local-airflow-webserver).
+### Core Files
 
-Deploy Your Project to Astronomer
-=================================
+- **`dags/`**: Contains Airflow DAG definitions for data processing workflows
+  - Data aggregation and transformation pipelines
+  - Feature engineering workflows
+  - ML data preparation tasks
 
-If you have an Astronomer account, pushing code to a Deployment on Astronomer is simple. For deploying instructions, refer to Astronomer documentation: https://www.astronomer.io/docs/astro/deploy-code/
+- **`data_preprocessing.sql`**: SQL queries for data cleaning and initial feature creation
+- **`train_test_split.sql`**: SQL logic for splitting data into training and testing sets
 
-Contact
-=======
+### Configuration Files
 
-The Astronomer CLI is maintained with love by the Astronomer team. To report a bug or suggest a change, reach out to our support.
+- **`Dockerfile`**: Astro Runtime Docker image with ML-specific dependencies
+- **`requirements.txt`**: Python packages for data processing and ML libraries
+- **`packages.txt`**: OS-level packages needed for data operations
+- **`airflow_settings.yaml`**: Airflow connections and variables for data sources
+
+### Supporting Directories
+
+- **`include/`**: Additional data processing utilities and helper functions
+- **`plugins/`**: Custom Airflow operators for ML-specific tasks
+- **`tests/`**: Unit tests for data processing logic
+
+## Key Features
+
+✅ **Automated Data Pipeline**: Scheduled data processing and feature generation
+✅ **BigQuery Integration**: Native support for Google BigQuery data operations
+✅ **ML-Ready Output**: Data formatted and split for immediate ML model consumption
+✅ **Data Quality Checks**: Built-in validation and monitoring
+✅ **Scalable Architecture**: Designed to handle large-scale data processing
+
+## Getting Started
+
+### Prerequisites
+
+- Docker and Docker Compose
+- Astronomer CLI (`astro`)
+- Access to Google BigQuery (for data storage)
+
+### Local Development
+
+1. **Start the Pipeline**:
+   ```bash
+   astro dev start
+   ```
+
+2. **Access Airflow UI**:
+   - Navigate to http://localhost:8080/
+   - Username: `admin` / Password: `admin`
+
+3. **Monitor Data Processing**:
+   - View DAG execution in the Airflow UI
+   - Check data quality metrics
+   - Monitor feature generation progress
+
+### Data Pipeline Workflow
+
+```
+Raw Data → Data Preprocessing → Feature Engineering → Train/Test Split → ML-Ready Data
+```
+
+### Container Architecture
+
+The pipeline runs on five Docker containers:
+
+- **Postgres**: Airflow metadata and workflow state storage
+- **Scheduler**: Monitors and triggers data processing tasks
+- **DAG Processor**: Parses and validates data pipeline definitions
+- **API Server**: Serves the Airflow UI and REST API
+- **Triggerer**: Handles deferred and sensor-based tasks
+
+## ML Use Cases
+
+This feature pipeline supports various ML scenarios:
+
+- **Predictive Analytics**: Customer behavior prediction, sales forecasting
+- **Classification Models**: User segmentation, fraud detection
+- **Regression Analysis**: Revenue prediction, demand forecasting
+- **Time Series**: Trend analysis, seasonal pattern detection
+
+## Deployment
+
+### Local Testing
+```bash
+# Start local development environment
+astro dev start
+
+# Test DAGs
+astro dev pytest
+
+# Stop environment
+astro dev stop
+```
+
+### Production Deployment
+
+For production deployment to Astronomer Cloud:
+
+1. **Setup Astronomer Account**: Create account at [astronomer.io](https://www.astronomer.io)
+2. **Deploy Pipeline**:
+   ```bash
+   astro deploy
+   ```
+3. **Configure Data Connections**: Set up BigQuery and other data source connections
+4. **Monitor Production**: Use Astronomer Cloud monitoring and alerting
+
+## Data Sources Integration
+
+- **Google BigQuery**: Primary data warehouse for feature storage
+- **External APIs**: Real-time data ingestion capabilities
+- **CSV/Parquet Files**: Batch data processing support
+- **Database Connections**: PostgreSQL, MySQL, and other RDBMS sources
+
+## Next Steps
+
+1. **Configure Data Sources**: Update `airflow_settings.yaml` with your data connections
+2. **Customize Features**: Modify SQL files to match your specific ML requirements
+3. **Add Validation**: Implement data quality checks and monitoring
+4. **Scale Pipeline**: Configure resource allocation for large datasets
+
+---
+
+**Maintained by**: Data Science Team
+**Documentation**: [Internal ML Pipeline Docs](link-to-docs)
+**Support**: Contact data engineering team for pipeline issues
