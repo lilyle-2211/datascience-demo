@@ -43,7 +43,22 @@ jobs:
 
     - name: Run data profiling tests
       run: |
-        uv run pytest tests/test_data_profiling.py -v --tb=short --junit-xml=test-results.xml --html=test-report.html --self-contained-html
+        uv run pytest tests/test_data_profiling.py -v --tb=short --junit-xml=test-results.xml
+
+    - name: Generate Markdown test report
+      if: always()
+      run: |
+        echo "# Test Results Report" > TEST_RESULTS.md
+        echo "" >> TEST_RESULTS.md
+        echo "## Summary" >> TEST_RESULTS.md
+        echo "- **Date**: $(date)" >> TEST_RESULTS.md
+        echo "- **Python Version**: 3.12" >> TEST_RESULTS.md
+        echo "- **PySpark Version**: 4.0.1" >> TEST_RESULTS.md
+        echo "" >> TEST_RESULTS.md
+        echo "## Test Output" >> TEST_RESULTS.md
+        echo '```' >> TEST_RESULTS.md
+        uv run pytest tests/test_data_profiling.py -v --tb=short >> TEST_RESULTS.md 2>&1 || true
+        echo '```' >> TEST_RESULTS.md
 
     - name: Upload test results
       uses: actions/upload-artifact@v4
@@ -52,17 +67,7 @@ jobs:
         name: test-results-python-3.12
         path: |
           test-results.xml
-          test-report.html
-
-    # Commented out test reporter due to permissions issue
-    # Can be re-enabled once permissions are properly configured
-    # - name: Publish test results
-    #   uses: dorny/test-reporter@v1
-    #   if: success() || failure()
-    #   with:
-    #     name: Test Results (Python 3.12)
-    #     path: test-results.xml
-    #     reporter: java-junit
+          TEST_RESULTS.md
 
   lint-and-format:
     runs-on: ubuntu-latest
