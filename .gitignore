@@ -27,6 +27,14 @@ training_pipeline/mlruns/
 # test-results.xml
 
 # Environment files
+# Credentials
+credentials.json
+*.key
+*.pem
+application_default_credentials.json
+.config/
+
+# Local environment
 .env
 .env.local
 
