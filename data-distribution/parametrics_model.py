@@ -11,15 +11,22 @@ All functions are standalone without classes for simplicity.
 Author: Data Science Demo
 """
 
-from typing import Dict, List, Tuple
+import matplotlib
 
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-import seaborn as sns
-from data_generators import generate_gaussian_mixture_data, generate_poisson_data
-from scipy.stats import chisquare, poisson
-from sklearn.mixture import GaussianMixture
+matplotlib.use("Agg")  # Use non-interactive backend for saving plots  # noqa: E402
+
+from typing import Dict, List, Tuple  # noqa: E402
+
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+import seaborn as sns  # noqa: E402
+from data_generators import (  # noqa: E402
+    generate_gaussian_mixture_data,
+    generate_poisson_data,
+)
+from scipy.stats import chisquare, poisson  # noqa: E402
+from sklearn.mixture import GaussianMixture  # noqa: E402
 
 # Set style for better plots
 plt.style.use("seaborn-v0_8")
@@ -132,7 +139,9 @@ def plot_gaussian_mixture(
 
     if save_path:
         plt.savefig(save_path, dpi=300, bbox_inches="tight")
-    plt.show()
+        plt.close()  # Close figure to free memory
+    else:
+        plt.show()
 
 
 def fit_poisson_distribution(data: np.ndarray) -> float:
@@ -259,7 +268,9 @@ def plot_poisson_distribution(
 
     if save_path:
         plt.savefig(save_path, dpi=300, bbox_inches="tight")
-    plt.show()
+        plt.close()  # Close figure to free memory
+    else:
+        plt.show()
 
 
 def analyze_poisson_data(data: np.ndarray, plot: bool = True) -> Dict:
@@ -352,9 +363,12 @@ def analyze_gaussian_mixture(
     return results
 
 
-def demonstrate_parametric_models():
+def demonstrate_parametric_models(save_plots=True):
     """
     Demonstrate both Gaussian Mixture Models and Poisson distribution analysis.
+
+    Args:
+        save_plots: Whether to save example plots for documentation
     """
     print("=" * 60)
     print("PARAMETRIC DISTRIBUTION MODELS DEMONSTRATION")
@@ -365,8 +379,18 @@ def demonstrate_parametric_models():
     print("-" * 40)
 
     # Generate and analyze GMM data
-    gmm_data = generate_gaussian_mixture_data(n_samples=1000)
+    gmm_data = generate_gaussian_mixture_data(n_samples=1000, random_state=42)
     gmm_results = analyze_gaussian_mixture(gmm_data, n_components=2, plot=False)
+
+    # Save GMM plot for README
+    if save_plots:
+        plot_gaussian_mixture(
+            gmm_data,
+            gmm_results["model"],
+            gmm_results["parameters"],
+            save_path="gmm_example.png",
+        )
+        print("  📊 GMM plot saved as 'gmm_example.png'")
 
     params = gmm_results["parameters"]
     print(f"Fitted GMM Parameters:")
@@ -386,8 +410,17 @@ def demonstrate_parametric_models():
     print("-" * 40)
 
     # Generate and analyze Poisson data
-    poisson_data = generate_poisson_data(lam=4.2, size=1000)
+    poisson_data = generate_poisson_data(lam=4.2, size=1000, random_state=42)
     poisson_results = analyze_poisson_data(poisson_data, plot=False)
+
+    # Save Poisson plot for README
+    if save_plots:
+        plot_poisson_distribution(
+            poisson_data,
+            poisson_results["statistics"]["lambda_estimated"],
+            save_path="poisson_example.png",
+        )
+        print("  📊 Poisson plot saved as 'poisson_example.png'")
 
     print("Poisson Statistics:")
     for key, value in poisson_results["statistics"].items():
@@ -412,12 +445,15 @@ def demonstrate_parametric_models():
 
 
 if __name__ == "__main__":
-    # Run the demonstration
-    gmm_results, poisson_results = demonstrate_parametric_models()
+    # Run the demonstration and save example plots
+    gmm_results, poisson_results = demonstrate_parametric_models(save_plots=True)
 
     print("\n" + "=" * 60)
     print("DEMONSTRATION COMPLETED SUCCESSFULLY!")
     print("=" * 60)
+    print("\nExample plots generated for documentation:")
+    print("  - gmm_example.png")
+    print("  - poisson_example.png")
     print("\nResults are available as 'gmm_results' and 'poisson_results'")
     print("Use individual functions for custom analysis:")
     print("  - fit_gaussian_mixture()")

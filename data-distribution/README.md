@@ -1,3 +1,15 @@
+# Parametric Distribution Models
+
+This module demonstrates parametric modeling techniques using Gaussian Mixture Models (GMM) and Poisson distributions with functional programming approach.
+
+## Example Results
+
+### Gaussian Mixture Model
+![GMM Example](gmm_example.png)
+
+### Poisson Distribution
+![Poisson Example](poisson_example.png)
+
 ## Data Requirements
 
 ### For Gaussian Mixture Models
@@ -61,4 +73,27 @@
 **Use Cases:**
 - **λ = 4.2**: Expect ~4 events per time period
 - **Good fit**: Random, independent events
-- **Applications**: Defect counting, customer arrivals, system failurests
+- **Applications**: Defect counting, customer arrivals, system failures
+
+## Quick Start
+
+To generate the example plots shown above:
+
+```python
+# Run the demonstration script
+python parametrics_model.py
+
+# Or use individual functions
+from parametrics_model import analyze_gaussian_mixture, analyze_poisson_data
+from data_generators import generate_gaussian_mixture_data, generate_poisson_data
+
+# Generate and analyze GMM data
+gmm_data = generate_gaussian_mixture_data(n_samples=1000)
+gmm_results = analyze_gaussian_mixture(gmm_data, n_components=2)
+
+# Generate and analyze Poisson data
+poisson_data = generate_poisson_data(lam=4.2, size=1000)
+poisson_results = analyze_poisson_data(poisson_data)
+```
+
+The plots will be automatically saved as `gmm_example.png` and `poisson_example.png` when running the main script.
